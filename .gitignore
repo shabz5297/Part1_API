@@ -5,6 +5,8 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+## application-local.properties ignore so we dont commit branch logins to main ##
+
 ### STS ###
 .apt_generated
 .classpath
@@ -18,7 +20,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
