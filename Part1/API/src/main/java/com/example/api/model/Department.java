@@ -11,13 +11,15 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
 
     @Positive
     private Integer budget;
+
     private String location;
 
-    @OneToMany // one department can have many assigned employees
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL) // one department can have many assigned employees
     private List<Assignment> assignments;
 
 

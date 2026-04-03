@@ -17,7 +17,7 @@ public class Assignment {
     @JoinColumn(name="department_id", nullable = false)
     private Department department;
 
-    private String role;
+    private String role; // job role not security
     private String accessLevel;
 
     public Assignment(Employee employee, Department department, String role, String accessLevel) {

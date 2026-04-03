@@ -13,33 +13,39 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
 
     @Email
     private String email;
 
+    private String password;
+
     @NotNull
     private String contractType;
+
     private LocalDate startDate;
     private Integer salary;
 
-    @OneToMany // one employee can have many assigned departments
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL) // one employee can have many assigned departments
     private List<Assignment> assignments;
 
 
+    private String role; // ROLE_HR, ROLE_MANAGER
+
 
     //no argument constructor for Hibernate to create new instance of class
-    public Employee() {
-    }
+    public Employee() {}
 
 
-    //doesnt include ID as DB will generate automatically
-    public Employee(String name, String contractType, String email, LocalDate startDate, Integer salary) {
+    //doesn't include ID as DB will generate automatically
+    public Employee(String name, String contractType, String email, LocalDate startDate, Integer salary, String role) {
         this.name = name;
         this.email = email;
         this.contractType = contractType;
         this.startDate = startDate;
         this.salary = salary;
+        this.role = role;
     }
 
     public Long getId() {return id;}
@@ -50,6 +56,9 @@ public class Employee {
 
     public String getEmail() {return email;}
     public void setEmail(String email) {this.email = email;}
+
+    public String getPassword() {return password;}
+    public void setPassword(String password) {this.password = password;}
 
     public @NotNull String getContractType() {return contractType;}
     public void setContractType(@NotNull String contractType) {this.contractType = contractType;}
@@ -62,6 +71,9 @@ public class Employee {
 
     public List<Assignment> getAssignments() {return assignments;}
     public void setAssignments(List<Assignment> assignments) {this.assignments = assignments;}
+
+    public String getRole() {return role;}
+    public void setRole(String role) {this.role = role;}
 
 }
 
