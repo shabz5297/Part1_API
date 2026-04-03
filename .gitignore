@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 
 ## application-local.properties ignore so we dont commit branch logins to main ##
+Part1/API/src/main/resources/application-local.properties
 
 ### STS ###
 .apt_generated
