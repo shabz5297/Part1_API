@@ -27,6 +27,11 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        // ✅ ADD THIS (Back button in Action Bar)
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         checkId = getIntent().getLongExtra("checkId", -1);
 
         TextView textDate = findViewById(R.id.textDate);
@@ -42,7 +47,9 @@ public class DetailActivity extends AppCompatActivity {
         recyclerView.setAdapter(defectAdapter);
 
         DetailViewModel viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
-        viewModel.getCheckWithDefects(checkId).observe(this, result -> bindResult(result, textDate, textVehicle, textDriver, textStatus));
+        viewModel.getCheckWithDefects(checkId).observe(this, result -> 
+            bindResult(result, textDate, textVehicle, textDriver, textStatus)
+        );
 
         buttonAddDefect.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddDefectActivity.class);
@@ -59,11 +66,18 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    // ✅ ADD THIS (handles back arrow click)
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
     private void bindResult(SafetyCheckWithDefects result,
-                            TextView textDate,
-                            TextView textVehicle,
-                            TextView textDriver,
-                            TextView textStatus) {
+                           TextView textDate,
+                           TextView textVehicle,
+                           TextView textDriver,
+                           TextView textStatus) {
         if (result == null || result.safetyCheck == null) {
             finish();
             return;
@@ -97,5 +111,4 @@ public class DetailActivity extends AppCompatActivity {
         }
         return body.toString();
     }
-
 }

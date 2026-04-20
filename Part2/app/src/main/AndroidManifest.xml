@@ -8,9 +8,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SafeCheck">
+
         <activity android:name=".AddDefectActivity" />
         <activity android:name=".AddSafetyCheckActivity" />
-        <activity android:name=".DetailActivity" />
+        <activity
+            android:name=".DetailActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -19,6 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
