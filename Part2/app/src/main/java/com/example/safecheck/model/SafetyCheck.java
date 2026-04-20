@@ -5,16 +5,13 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "safety_checks")
 public class SafetyCheck {
-
     @PrimaryKey(autoGenerate = true)
     public long checkId;
 
-    public String date;                  // e.g. "12/04/2025"
-    public String vehicleRegistration;   // e.g. "AB12 CDE"
+    public String date;
+    public String vehicleRegistration;
     public String driverName;
-    public String overallStatus;         // "Pass" or "Fail"
-
-    public SafetyCheck() {}
+    public String overallStatus;
 
     public SafetyCheck(String date, String vehicleRegistration, String driverName, String overallStatus) {
         this.date = date;

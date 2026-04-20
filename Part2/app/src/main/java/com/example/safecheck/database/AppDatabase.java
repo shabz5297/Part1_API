@@ -13,14 +13,11 @@ import com.example.safecheck.model.SafetyCheck;
 
 @Database(entities = {SafetyCheck.class, Defect.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
-
     private static volatile AppDatabase INSTANCE;
 
-    // Abstract methods that Room implements at compile time
     public abstract SafetyCheckDao safetyCheckDao();
     public abstract DefectDao defectDao();
 
-    // Singleton pattern — ensures only one database instance exists across the app
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {

@@ -5,31 +5,32 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import com.example.safecheck.model.SafetyCheck;
+import com.example.safecheck.model.SafetyCheckSummary;
+import com.example.safecheck.model.SafetyCheckWithDefects;
 
 import java.util.List;
 
 @Dao
 public interface SafetyCheckDao {
-
-    // Insert a new SafetyCheck, returns the generated checkId
     @Insert
     long insert(SafetyCheck safetyCheck);
 
-    // Query all SafetyChecks, observed as LiveData so UI updates automatically
-    @Query("SELECT * FROM safety_checks ORDER BY checkId DESC")
-    LiveData<List<SafetyCheck>> getAllChecks();
-
-    // Query a single SafetyCheck by its ID
-    @Query("SELECT * FROM safety_checks WHERE checkId = :checkId")
-    SafetyCheck getCheckById(long checkId);
-
-    // Delete a specific SafetyCheck (cascades to Defects via @ForeignKey)
     @Delete
     void delete(SafetyCheck safetyCheck);
 
-    // Count defects associated with a check — used for the RecyclerView row display
-    @Query("SELECT COUNT(*) FROM defects WHERE checkId = :checkId")
-    int getDefectCount(long checkId);
+    @Query("SELECT * FROM safety_checks WHERE checkId = :checkId LIMIT 1")
+    SafetyCheck getCheckById(long checkId);
+
+    @Query("SELECT sc.checkId, sc.date, sc.vehicleRegistration, COUNT(d.defectId) AS defectCount " +
+            "FROM safety_checks sc LEFT JOIN defects d ON sc.checkId = d.checkId " +
+            "GROUP BY sc.checkId, sc.date, sc.vehicleRegistration " +
+            "ORDER BY sc.checkId DESC")
+    LiveData<List<SafetyCheckSummary>> getAllCheckSummaries();
+
+    @Transaction
+    @Query("SELECT * FROM safety_checks WHERE checkId = :checkId LIMIT 1")
+    LiveData<SafetyCheckWithDefects> getCheckWithDefects(long checkId);
 }

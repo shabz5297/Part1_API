@@ -6,26 +6,22 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(
-    tableName = "defects",
-    foreignKeys = @ForeignKey(
-        entity = SafetyCheck.class,
-        parentColumns = "checkId",
-        childColumns = "checkId",
-        onDelete = ForeignKey.CASCADE  // Deleting a SafetyCheck deletes all its Defects
-    ),
-    indices = {@Index("checkId")}      // Index for efficient foreign key lookups
+        tableName = "defects",
+        foreignKeys = @ForeignKey(
+                entity = SafetyCheck.class,
+                parentColumns = "checkId",
+                childColumns = "checkId",
+                onDelete = ForeignKey.CASCADE
+        ),
+        indices = {@Index("checkId")}
 )
 public class Defect {
-
     @PrimaryKey(autoGenerate = true)
     public long defectId;
 
-    public long checkId;           // Foreign key linking to SafetyCheck
-
-    public String description;     // e.g. "Cracked Mirror"
-    public String severity;        // "Low" or "High"
-
-    public Defect() {}
+    public long checkId;
+    public String description;
+    public String severity;
 
     public Defect(long checkId, String description, String severity) {
         this.checkId = checkId;
